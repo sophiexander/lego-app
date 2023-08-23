@@ -8,3 +8,10 @@ export interface LegoSet {
   set_url: string;
   last_modified_dt: string;
 }
+
+export interface LegoSetResponseType {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: LegoSet[];
+}

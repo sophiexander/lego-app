@@ -2,7 +2,7 @@ import "uikit/dist/css/uikit.css";
 import { useState } from "react";
 import "./App.css";
 import Navbar from "./Navbar";
-import LegoSetImage from "./LegoSetImage";
+import LegoSetDisplay from "./LegoSetDisplay";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       test
       {/* <Navbar handleClick={"home"} /> */}
       <div>
-        <LegoSetImage />
+        <LegoSetDisplay />
       </div>
     </div>
   );

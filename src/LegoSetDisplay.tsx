@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { LegoSet } from "./models/LegoSet";
+import { LegoSet, LegoSetResponseType } from "./models/LegoSet";
+import LegoSetCard from "./LegoSetCard";
 export interface Props {}
 
 // React.useEffect(() => {});
-
+const legoSetNumbers = ["10312-1"];
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
-console.log(API_KEY);
-export default function LegoSetImage({}: Props) {
-  const [singleLegoSet, setLegoSet] = useState<LegoSet | undefined>();
+
+export default function LegoSetDisplay({}: Props) {
+  const [legoSetArray, setLegoSetArray] = useState<LegoSet[] | undefined>();
+
   React.useEffect(() => {
     getLegoSet();
-  });
+  }, []);
 
   async function getLegoSet() {
     try {
-      const { data, status } = await axios.get<LegoSet>(
-        `https://rebrickable.com/api/v3/lego/sets/${"10312-1"}?key=${API_KEY}`,
+      const { data, status } = await axios.get<LegoSetResponseType>(
+        `https://rebrickable.com/api/v3/lego/sets/?key=${API_KEY}`,
         {
           headers: {
             Accept: "application/json",
@@ -25,7 +27,7 @@ export default function LegoSetImage({}: Props) {
       );
       console.log(JSON.stringify(data, null, 4));
       console.log("response status is: ", status);
-      setLegoSet(data);
+      setLegoSetArray(data.results);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -38,19 +40,10 @@ export default function LegoSetImage({}: Props) {
   }
 
   return (
-    <div className="uk-card uk-card-default">
-      <div className="uk-card-media-top">
-        <img
-          src={singleLegoSet?.set_img_url}
-          width="1800"
-          height="1200"
-          alt=""
-        ></img>
-      </div>
-      <div className="uk-card-body">
-        <h3 className="uk-card-title">{singleLegoSet?.name}</h3>
-        <p>Number of parts: {singleLegoSet?.num_parts}</p>
-      </div>
+    <div className="uk-flex uk-flex-wrap">
+      {legoSetArray?.map((item, i) => (
+        <LegoSetCard key={i} set={item} />
+      ))}
     </div>
   );
 }
