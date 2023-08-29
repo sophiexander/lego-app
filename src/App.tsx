@@ -7,11 +7,10 @@ import LegoSetDisplay from "./LegoSetDisplay";
 function App() {
   return (
     <div>
-      test
       {/* <Navbar handleClick={"home"} /> */}
-      <div>
-        <LegoSetDisplay />
-      </div>
+      {/* <div> */}
+      <LegoSetDisplay />
+      {/* </div> */}
     </div>
   );
 }
