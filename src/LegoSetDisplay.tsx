@@ -14,10 +14,14 @@ export default function LegoSetDisplay({}: Props) {
   );
   const [legoSetArray, setLegoSetArray] = useState<LegoSet[] | undefined>();
 
-  let next: string | null = "";
+  const [response, setResponse] = useState<LegoSetResponseType | null>(null);
+  // const [next, setNext] = useState<string | null>("");
+
+  // let next: string | null = "";
 
   React.useEffect(() => {
     getLegoSet();
+    console.log("LEGOURL", LegoURL);
   }, [LegoURL]);
 
   async function getLegoSet() {
@@ -27,10 +31,12 @@ export default function LegoSetDisplay({}: Props) {
           Accept: "application/json",
         },
       });
-      console.log(JSON.stringify(data, null, 4));
+      // console.log(JSON.stringify(data, null, 4));
       console.log("response status is: ", status);
       setLegoSetArray(data.results);
-      next = data.next;
+      console.log("NEXT", data.next);
+      setResponse(data);
+      // next = data.next;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -43,18 +49,40 @@ export default function LegoSetDisplay({}: Props) {
   }
 
   function handleClick(event: any) {
-    console.log("click next page");
-    if (next) {
-      setLegoURL(next);
+    console.log("click next page:", event.target.id);
+    if (response?.next && event.target.id === "next") {
+      setLegoURL(response.next);
+    } else if (response?.previous && event.target.id === "previous") {
+      setLegoURL(response.previous);
     }
   }
 
   return (
-    <div className="uk-flex uk-flex-wrap">
-      <button onClick={handleClick}>Next Page</button>
-      {legoSetArray?.map((item, i) => (
-        <LegoSetCard key={i} set={item} />
-      ))}
+    <div className="uk-background-primary">
+      <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; end: !.uk-background-primary; offset: 0">
+        <nav className="uk-navbar-container">
+          <div className="uk-container">
+            <div uk-navbar>
+              <div className="uk-navbar-left">
+                <ul className="uk-navbar-nav">
+                  <button id="previous" onClick={handleClick}>
+                    Previous Page
+                  </button>
+                  <button id="next" onClick={handleClick}>
+                    Next Page
+                  </button>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <div className="uk-flex uk-flex-wrap">
+        {legoSetArray?.map((item, i) => (
+          <LegoSetCard key={i} set={item} />
+        ))}
+      </div>
     </div>
   );
 }
