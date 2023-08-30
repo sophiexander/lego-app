@@ -12,16 +12,13 @@ export default function Navbar({ handleClick }: Props) {
             aria-label="Back to Home"
             onClick={() => handleClick("home")}
           >
-            <h2 className="uk-heading-small">Xander Creative</h2>
+            <h2 className="uk-heading-small">Lego Guide</h2>
           </a>
 
           <div className="uk-navbar-right uk-margin-right">
             <ul className="uk-navbar-nav">
               <li>
-                <a onClick={() => handleClick("move")}>StretchMinder</a>
-              </li>
-              <li>
-                <a onClick={() => handleClick("pilates")}>Pilates</a>
+                <a onClick={() => handleClick("me")}>My Sets</a>
                 {/* <a href="#">Pilates</a> */}
               </li>
             </ul>

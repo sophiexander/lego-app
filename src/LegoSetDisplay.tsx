@@ -10,14 +10,12 @@ const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
 export default function LegoSetDisplay({}: Props) {
   const [LegoURL, setLegoURL] = useState(
-    `https://rebrickable.com/api/v3/lego/sets/?key=${API_KEY}&min_year=2000&ordering=theme_id`
+    `https://rebrickable.com/api/v3/lego/sets/?key=${API_KEY}&min_year=2000&theme_id=158`
   );
   const [legoSetArray, setLegoSetArray] = useState<LegoSet[] | undefined>();
 
   const [response, setResponse] = useState<LegoSetResponseType | null>(null);
   // const [next, setNext] = useState<string | null>("");
-
-  // let next: string | null = "";
 
   React.useEffect(() => {
     getLegoSet();
@@ -73,12 +71,13 @@ export default function LegoSetDisplay({}: Props) {
                   </button>
                 </ul>
               </div>
+              <div className="uk-navbar-right uk-margin-right">Hi</div>
             </div>
           </div>
         </nav>
       </div>
 
-      <div className="uk-flex uk-flex-wrap">
+      <div className="uk-flex uk-flex-wrap uk-flex-center">
         {legoSetArray?.map((item, i) => (
           <LegoSetCard key={i} set={item} />
         ))}

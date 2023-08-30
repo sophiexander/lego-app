@@ -8,9 +8,9 @@ export interface Props {
 
 export default function LegoSetCard({ set, key }: Props) {
   return (
-    <div className="uk-card uk-card-default">
+    <div className="uk-card uk-card-default uk-margin">
       <div className="uk-card-media-top">
-        <img src={set.set_img_url} width="200" height="200" alt=""></img>
+        <img src={set.set_img_url} width="200" alt=""></img>
       </div>
       <div className="uk-card-body">
         <h3 className="uk-card-title">{set.name}</h3>
