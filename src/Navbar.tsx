@@ -19,7 +19,7 @@ export default function Navbar({ handleClick }: Props) {
             <ul className="uk-navbar-nav">
               <li>
                 <a onClick={() => handleClick("me")}>My Sets</a>
-                {/* <a href="#">Pilates</a> */}
+                {/* // TODO save a list of own sets */}
               </li>
             </ul>
           </div>

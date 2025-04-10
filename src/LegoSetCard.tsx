@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios";
 import { LegoSet } from "./models/LegoSet";
 export interface Props {
   key: number;
   set: LegoSet;
 }
 
-export default function LegoSetCard({ set, key }: Props) {
+export default function LegoSetCard({ set }: Props) {
   return (
     <div className="uk-card uk-card-default uk-margin">
       <div className="uk-card-media-top">
