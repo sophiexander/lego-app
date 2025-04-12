@@ -1,10 +1,9 @@
-import React, { MouseEventHandler, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { LegoSet, LegoSetResponseType } from "./models/LegoSet";
 import LegoSetCard from "./LegoSetCard";
+import getLegoSets from "./rebrickable/client";
 export interface Props {}
 
-// React.useEffect(() => {});
 const legoSetNumbers = ["10312-1"];
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
@@ -18,33 +17,13 @@ export default function LegoSetDisplay({}: Props) {
   // const [next, setNext] = useState<string | null>("");
 
   React.useEffect(() => {
-    getLegoSet();
-    console.log("LEGOURL", LegoURL);
-  }, [LegoURL]);
-
-  async function getLegoSet() {
-    try {
-      const { data, status } = await axios.get<LegoSetResponseType>(LegoURL, {
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      // console.log(JSON.stringify(data, null, 4));
-      console.log("response status is: ", status);
-      setLegoSetArray(data.results);
-      console.log("NEXT", data.next);
-      setResponse(data);
-      // next = data.next;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        throw Error(error.message);
-      } else {
-        console.log("unexpected error: ", error);
-        throw Error("An unexpected error occurred");
-      }
+    async function fetch() {
+      const responce = await getLegoSets({ url: LegoURL });
+      setLegoSetArray(responce.results);
+      setResponse(responce);
     }
-  }
+    fetch();
+  }, [LegoURL]);
 
   function handleClick(event: any) {
     console.log("click next page:", event.target.id);
